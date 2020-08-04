@@ -1,2 +1,2 @@
-# CSMM Patrons Mod
+# CSMM Patrons Mod (CPM)
  
