@@ -1,0 +1,188 @@
+<!--
+	Changes to this xml will be loaded at server start!
+	
+	Sections in this Xml:
+	* CPM Internal Tooltips
+	* CPM adv. claims specific tooltips
+	* Custom tooltips for use with tooltip console command
+
+	1. CPM Internal Tooltips:
+		Used by CPM internally. Will automatically use tooltips (and optional visual indicator) for enterresetregion, exitresetregion, enterpveclaim, exitpveclaim,
+		reversed claim, normal claim, lcbfree claim, landclaim claim, lcbinregion (resetregion), lcb2close (resetregion), allpoiprotectionlcb, allpoiprotectionbed, questpoiprotectionlcb, questpoiprotectionbed
+		and onvehicle warnig for all relevant claims. 
+
+		Do NOT alter the attributes name, name_key, duration, display_value, stacktype and buff in this sections as they are internally used by CPM.
+
+		If you want the tooltip to be accompanied by a visual indicator in de buff section on the players screen, comment (or remove) the trigger onSelfBuffStart and the tooltip buff icon will remain on players screen
+		in buff section until he/she leaves the corresponding claim area.
+		<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_enterresetregion"/></effect_group>
+
+		Attributes:
+		icon="ui_game_symbol_block_repair" : the icon used for the tooltip buff (can be any game symbol allready present in game assets)
+		icon_color="255,0,0" : optional color for the tooltip buff icon
+		icon_blink="true" : optional. the tooltip buff icon (if kept visible) will blink constantly as long as the icon in visible
+		tooltip_key="some text" : The actual text shown in a tooltip to the player
+		display_value_key value="In reset zone" : the text that is shown next to the tooltip icon (if kept visible)
+
+		Reverting to chatcommuniction (with input from CpmStrings.xml instead of buffs.xml) you just have to comment the complete buff you dont want to use a tooltip for. Chat will automatically be used again.
+
+	2. CPM adv. claims specific tooltips
+		Adv. claims that have variable text in their communication, need to be defined in this section of the xml. This way you can have a specific tooltip for a specific claim.
+
+		Adv. Claims that need a specific tooltip (if omitted, the /old/ chat communication system will be used instead of tooltip communication):
+		* problock claim
+		* antiblock claim
+		* playerlevel claim
+		* normal notify claim (except PVE notify claim, as that has an internal tooltip)
+
+		Attributes name, name_key and buff have to be in the format: cpm_tooltip_claimname and identical for the 3 attributes.
+
+		If you want the tooltip to be accompanied by a visual indicator in de buff section on the players screen, comment (or remove) the trigger onSelfBuffStart and the tooltip buff icon will remain on players screen
+		in buff section until he/she leaves the corresponding claim area.
+		<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_myProblockClaim"/></effect_group>
+
+		Attributes:
+		icon="ui_game_symbol_block_repair" : the icon used for the tooltip buff (can be any game symbol allready present in game assets)
+		icon_color="255,0,0" : optional color for the tooltip buff icon
+		icon_blink="true" : optional. the tooltip buff icon (if kept visible) will blink constantly as long as the icon in visible
+		tooltip_key="some text" : The actual text with specific info on the claim shown in a tooltip to the player
+		display_value_key value="In reset zone" : the text that is shown next to the tooltip icon (if kept visible)
+		name, name_key and buff: needs to be identical for all 3 attributes and ALWAYS in the format "cpm_tooltip_claimName" where claimName is the exact claim name you want to attach this tooltip to.
+
+		If its a normal notify claim you will need to define a tooltip for the enter,- and exit message. This needs to be in the format "cpm_tooltip_claimName_enter" and "cpm_tooltip_claimName_exit"
+
+		For adv. claims specific tooltips you can also choose to display an visual indicator during the time the player is in the claimed area. Comment (or remove) the trigger onSelfBuffStart and the icon will be
+		visible during presence on the specific claim that the tooltip is linked to. 
+		<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_myNotify_enter"/></effect_group>
+	
+	3. Custom tooltips for use with tooltip console command
+		Define custom tooltips that are not linked to CPM functionality. Any message you would like to be able to show as tooltip to a (or all) player(s) can be defined here.
+
+		Attributes:
+		tooltip_key="some text" : The actual text with specific info on the claim shown in a tooltip to the player
+		name, name_key and buff: needs to be identical for all 3 attributes but you can choose the name yourself completely. 
+
+		Use the CPM console command tooltip to show the tooltip on demand to a (or all) player(s). Example: tooltip all ticker_nogriefing
+
+		Leave the trigger onSelfBuffStart always intact for custom tooltips. Else the tooltip icon will stay on until you debuff it explicitly from the player(s) that have it.
+-->
+
+
+<configs>
+	<append xpath="/buffs">
+<!-- CPM internal tooltips -->
+		<buff name="cpm_tooltip_enterresetregion" name_key="cpm_tooltip_enterresetregion" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are entering a reset area! Do [FF0000]NOT[-] build here![-]">
+			<display_value_key value="In reset zone"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<!--<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_enterresetregion"/></effect_group>-->
+		</buff>
+
+		<buff name="cpm_tooltip_exitresetregion" name_key="cpm_tooltip_exitresetregion" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are leaving a reset area![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_exitresetregion"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_enterpveclaim" name_key="cpm_tooltip_enterpveclaim" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are entering a PVE zone! Killing will be punished.[-]">
+			<display_value_key value="In PVE zone"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<!--<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_enterpveclaim"/></effect_group>-->
+		</buff>
+
+		<buff name="cpm_tooltip_exitpveclaim" name_key="cpm_tooltip_exitpveclaim" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are leaving a PVE zone! You can be killed unpunished.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_exitpveclaim"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_reversed" name_key="cpm_tooltip_reversed" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are not allowed to leave this area![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_reversed"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_normal" name_key="cpm_tooltip_normal" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Advanced claim intrusion: This area is claimed and you may not enter.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_normal"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_lcbfree" name_key="cpm_tooltip_lcbfree" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are in a LCB free adv. claimed area. You are not allowed to place a LCB.[-]">
+			<display_value_key value="In LCBfree zone"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_lcbfree"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_landclaim" name_key="cpm_tooltip_landclaim" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Claimed area. You are not allowed to place any blocks here![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_landclaim"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_lcbinregion" name_key="cpm_tooltip_lcbinregion" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You have placed a LCB in a reset region! The LCB has been put back in your inventory.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_lcbinregion"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_lcb2close" name_key="cpm_tooltip_lcb2close" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You have placed a LCB too close to a reset region! The LCB has been put back in your inventory.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_lcb2close"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_allpoiprotectionlcb" name_key="cpm_tooltip_allpoiprotectionlcb" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Claim area overlaps a POI! You are not allowed to place a LCB here![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_allpoiprotectionlcb"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_allpoiprotectionbed" name_key="cpm_tooltip_allpoiprotectionbed" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Bed(roll) deadzone overlaps a POI! You are not allowed to place a bed(roll) here! Bed(roll) deactivated.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_allpoiprotectionbed"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_questpoiprotectionlcb" name_key="cpm_tooltip_questpoiprotectionlcb" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Claim area overlaps a quest POI! You are not allowed to place a LCB here![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_questpoiprotectionlcb"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_questpoiprotectionbed" name_key="cpm_tooltip_questpoiprotectionbed" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Bed(roll) deadzone overlaps a quest POI! You are not allowed to place a bed(roll) here! Bed(roll) deactivated.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_questpoiprotectionbed"/></effect_group>
+		</buff>
+		
+		<buff name="cpm_tooltip_onvehiclewarning" name_key="cpm_tooltip_onvehiclewarning" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You entered an advanced claimed area. Do NOT leave/step of your vehicle or LOSE it![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_onvehiclewarning"/></effect_group>
+		</buff>
+<!-- CPM end of internal tooltips -->
+
+<!-- CPM adv. claims specific tooltips -->
+
+		<!--<buff name="cpm_tooltip_problockClaimName" name_key="cpm_tooltip_problockClaimName" icon="ui_game_symbol_block_repair" tooltip_key="[F7FE2E]You are only allowed to place vendingmachines here![-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_problockClaimName"/></effect_group>
+		</buff>-->
+
+		<!--<buff name="cpm_tooltip_antiblockClaimName" name_key="cpm_tooltip_antiblockClaimName" icon="ui_game_symbol_block_repair" tooltip_key="[F7FE2E]You are not allowed to place woodFrame and rebarFrame blocks here!">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_antiblockClaimName"/></effect_group>
+		</buff>-->
+
+		<!--<buff name="cpm_tooltip_playerlevelClaimName" name_key="cpm_tooltip_playerlevelClaimName" icon="ui_game_symbol_block_repair" tooltip_key="[F7FE2E]Advanced claim intrusion: Only level < 10 allowed here.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_playerlevelClaimName"/></effect_group>
+		</buff>-->
+
+		<!--<buff name="cpm_tooltip_myNotify_enter" name_key="cpm_tooltip_myNotify_enter" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Normal custom notification on enter[-]">
+			<display_value_key value="Custom Notify"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_myNotify_enter"/></effect_group>
+		</buff>-->
+
+		<!--<buff name="cpm_tooltip_myNotify_exit" name_key="cpm_tooltip_myNotify_exit" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]Normal custom notification on exit[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_myNotify_exit"/></effect_group>
+		</buff>-->
+
+<!-- CPM end of adv. claims specific tooltips -->
+
+<!-- CPM start of custom tooltips -->
+
+		<!--<buff name="tickerNoRaiding" name_key="tickerNoRaiding" icon="ui_game_symbol_block_repair" tooltip_key="[F7FE2E]No griefing/stealing/raiding allowed[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="tickerNoRaiding"/></effect_group>
+		</buff>-->
+
+<!-- CPM end of custom tooltips -->
+	</append>
+</configs>
