@@ -81,14 +81,24 @@
 			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_exitresetregion"/></effect_group>
 		</buff>
 
-		<buff name="cpm_tooltip_enterpveclaim" name_key="cpm_tooltip_enterpveclaim" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are entering a PVE zone! Killing will be punished.[-]">
+		<buff name="cpm_tooltip_enterpveclaim" name_key="cpm_tooltip_enterpveclaim" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are entering a PVE zone! Killing is not possible.[-]">
 			<display_value_key value="In PVE zone"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
 			<!--<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_enterpveclaim"/></effect_group>-->
 		</buff>
 
-		<buff name="cpm_tooltip_exitpveclaim" name_key="cpm_tooltip_exitpveclaim" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are leaving a PVE zone! You can be killed unpunished.[-]">
+		<buff name="cpm_tooltip_exitpveclaim" name_key="cpm_tooltip_exitpveclaim" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are leaving a PVE zone! Killing is possible again![-]">
 			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
 			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_exitpveclaim"/></effect_group>
+		</buff>
+
+		<buff name="cpm_tooltip_enterpvpclaim" name_key="cpm_tooltip_enterpvpclaim" icon="ui_game_symbol_block_repair" icon_color="255,0,0" tooltip_key="[00FF00]You are entering a PVP zone! Killing is possible.[-]">
+			<display_value_key value="In PVP zone"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<!--<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_enterpvpclaim"/></effect_group>-->
+		</buff>
+
+		<buff name="cpm_tooltip_exitpvpclaim" name_key="cpm_tooltip_exitpvpclaim" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are leaving a PVP zone! Killing is not possible anymore.[-]">
+			<display_value_key value="CPM"/> <display_value value="xxx"/> <stack_type value="ignore"/><duration value="0"/>
+			<effect_group><triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="cpm_tooltip_exitpvpclaim"/></effect_group>
 		</buff>
 
 		<buff name="cpm_tooltip_reversed" name_key="cpm_tooltip_reversed" icon="ui_game_symbol_block_repair" tooltip_key="[00FF00]You are not allowed to leave this area![-]">
