@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xml>
-	<ModInfo>
-		<Name value="CSMM Patrons" />
-		<Description value="Additional management and player control functionality" />
-		<Author value="Prisma501" />
-		<Version value="22.4.1" />
-		<Website value="http://cpm.7d2d.download" />
-	</ModInfo>
+	<Name value="1CSMM_Patrons" />
+	<DisplayName value="CSMM Patrons" />
+	<Description value="Additional management and player control functionality" />
+	<Author value="Prisma501" />
+	<Version value="23.0" />
+	<Website value="http://cpm.7d2d.download"/>
 </xml>
